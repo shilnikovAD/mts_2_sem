@@ -15,12 +15,7 @@ public class UserUniversityController {
   private UserUniversityService userUniversityService;
 
   @GetMapping
-  public List<UserUniversity> getAllUniversities() {
-    return userUniversityService.getAllUniversities();
-  }
-
-  @PostMapping
-  public UserUniversity createUniversity(@RequestBody UserUniversity userUniversity) {
-    return userUniversityService.createUniversity(userUniversity);
+  public String getAllUniversities() {
+    return "testuserUneversity";
   }
 }

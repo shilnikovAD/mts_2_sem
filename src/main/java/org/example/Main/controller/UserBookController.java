@@ -15,12 +15,7 @@ public class UserBookController {
   private UserBookService userBookService;
 
   @GetMapping
-  public List<UserBook> getAllBooks() {
-    return userBookService.getAllBooks();
-  }
-
-  @PostMapping
-  public UserBook createBook(@RequestBody UserBook userBook) {
-    return userBookService.createBook(userBook);
+  public String getAllBooks() {
+    return "testUserBook";
   }
 }

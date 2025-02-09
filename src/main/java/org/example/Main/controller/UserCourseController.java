@@ -15,12 +15,8 @@ public class UserCourseController {
   private UserCourseService userCourseService;
 
   @GetMapping
-  public List<UserCourse> getAllCourses() {
-    return userCourseService.getAllCourses();
+  public String getAllCourses() {
+    return "testusercourse";
   }
 
-  @PostMapping
-  public UserCourse createCourse(@RequestBody UserCourse userCourse) {
-    return userCourseService.createCourse(userCourse);
-  }
 }
