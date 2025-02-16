@@ -1,5 +1,6 @@
 package org.example.Main.controller;
 
+import org.example.Main.OpenApi.BOOK_API;
 import org.example.Main.service.UserBookService;
 import org.example.Main.model.UserBook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,39 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user-books")
-public class UserBookController {
+public class UserBookController implements BOOK_API {
 
   @Autowired
   private UserBookService userBookService;
 
-  @GetMapping
-  public String getAllBooks() {
-    return "testUserBook";
+  @Override
+  public List<UserBook> getAllBooks() {
+    return userBookService.getAllBooks();
+  }
+
+  @Override
+  public UserBook getBookById(Long id) {
+    return userBookService.getBookById(id)
+        .orElseThrow(() -> new RuntimeException("Book not found"));
+  }
+
+  @Override
+  public UserBook createBook(UserBook userBook) {
+    return userBookService.createBook(userBook);
+  }
+
+  @Override
+  public UserBook updateBook(Long id, UserBook userBook) {
+    return userBookService.updateBook(id, userBook);
+  }
+
+  @Override
+  public UserBook patchBook(Long id, UserBook userBook) {
+    return userBookService.patchBook(id, userBook);
+  }
+
+  @Override
+  public void deleteBook(Long id) {
+    userBookService.deleteBook(id);
   }
 }
