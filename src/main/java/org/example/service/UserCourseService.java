@@ -1,7 +1,7 @@
-package org.example.Main.service;
+package org.example.service;
 
-import org.example.Main.model.UserCourse;
-import org.example.Main.repository.UserCourseRepository;
+import org.example.model.UserCourse;
+import org.example.repository.UserCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;

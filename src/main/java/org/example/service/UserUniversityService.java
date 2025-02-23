@@ -1,7 +1,7 @@
-package org.example.Main.service;
+package org.example.service;
 
-import org.example.Main.model.UserUniversity;
-import org.example.Main.repository.UserUniversityRepository;
+import org.example.model.UserUniversity;
+import org.example.repository.UserUniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class UserUniversityService {
 
-  private static final Logger logger = LoggerFactory.getLogger(UserUniversityService.class);
+  public static final Logger logger = LoggerFactory.getLogger(UserUniversityService.class);
 
   @Autowired
   private UserUniversityRepository userUniversityRepository;

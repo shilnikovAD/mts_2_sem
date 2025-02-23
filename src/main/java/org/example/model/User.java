@@ -1,16 +1,31 @@
-package org.example.Main.model;
+package org.example.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @Entity
 public class User {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // H2 supports this for auto-generation
   private Long id;
   private String name;
   private String email;
+
+  public User() {}
+
+  public User(String name, String email) {
+    this.name = name;
+    this.email = email;
+  }
+
+  public User(Long id, String name, String email) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+  }
 
   public Long getId() {
     return id;
@@ -36,4 +51,3 @@ public class User {
     this.email = email;
   }
 }
-

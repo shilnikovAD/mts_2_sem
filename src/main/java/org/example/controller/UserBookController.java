@@ -1,8 +1,8 @@
-package org.example.Main.controller;
+package org.example.controller;
 
-import org.example.Main.OpenApi.BOOK_API;
-import org.example.Main.service.UserBookService;
-import org.example.Main.model.UserBook;
+import org.example.OpenApi.BOOK_API;
+import org.example.service.UserBookService;
+import org.example.model.UserBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,8 +1,8 @@
-package org.example.Main.controller;
+package org.example.controller;
 
-import org.example.Main.OpenApi.USER_API;
-import org.example.Main.service.UserService;
-import org.example.Main.model.User;
+import org.example.OpenApi.USER_API;
+import org.example.service.UserService;
+import org.example.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,11 @@
-package org.example.Main.OpenApi;
+package org.example.OpenApi;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.Main.model.UserBook;
+import org.example.model.UserBook;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

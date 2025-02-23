@@ -1,7 +1,7 @@
-package org.example.Main.service;
+package org.example.service;
 
-import org.example.Main.model.User;
-import org.example.Main.repository.UserRepository;
+import org.example.model.User;
+import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;

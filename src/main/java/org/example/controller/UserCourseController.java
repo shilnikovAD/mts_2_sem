@@ -1,11 +1,8 @@
-package org.example.Main.controller;
+package org.example.controller;
 
-import org.example.Main.service.UserCourseService;
-import org.example.Main.model.UserCourse;
+import org.example.service.UserCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user-courses")
