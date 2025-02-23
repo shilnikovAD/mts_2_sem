@@ -1,6 +1,7 @@
 package general;
 
-import org.example.Main.model.UserBook;
+import org.example.Main;
+import org.example.model.UserBook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = Main.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class UserBookControllerE2ETest {
 
@@ -27,10 +28,14 @@ public class UserBookControllerE2ETest {
 
   @Test
   public void testGetAllBooks() {
-    String url = "http://localhost:%d/users/books".formatted(port);
+    String url = String.format("http://localhost:%d/users/books", port);
+
     ResponseEntity<UserBook[]> response = restTemplate.getForEntity(url, UserBook[].class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+
     assertNotNull(response.getBody());
+
+    assertTrue(response.getBody().length > 0, "The response body should contain at least one book.");
   }
 }
