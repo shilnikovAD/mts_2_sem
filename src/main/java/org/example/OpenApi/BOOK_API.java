@@ -6,9 +6,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.model.UserBook;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Book API", description = "Operations related to books")
 public interface BOOK_API {
@@ -27,7 +34,7 @@ public interface BOOK_API {
       @ApiResponse(responseCode = "404", description = "Book not found")
   })
   @GetMapping("/{id}")
-  UserBook getBookById(@Parameter(description = "ID of the book") @PathVariable Long id);
+  ResponseEntity<UserBook> getBookById(@Parameter(description = "ID of the book") @PathVariable Long id);
 
   @Operation(summary = "Create a new book", description = "Adds a new book to the database")
   @ApiResponses(value = {

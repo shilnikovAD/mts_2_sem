@@ -1,14 +1,18 @@
 package org.example.service;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.model.UserBook;
 import org.example.repository.UserBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Service
+@Slf4j
 public class UserBookService {
 
   @Autowired
@@ -19,7 +23,7 @@ public class UserBookService {
   }
 
   public Optional<UserBook> getBookById(Long id) {
-    return userBookRepository.findById(id);  // Возвращаем Optional
+    return userBookRepository.findById(id);
   }
 
   public UserBook createBook(UserBook userBook) {
@@ -27,26 +31,27 @@ public class UserBookService {
   }
 
   public UserBook updateBook(Long id, UserBook userBook) {
-    if (!userBookRepository.existsById(id)) {
-      throw new RuntimeException("Book not found");
+    if (userBookRepository.findById(id).isPresent()) {
+      return userBookRepository.save(userBook);
     }
-    userBook.setId(id);
-    return userBookRepository.save(userBook);
-  }
-
-  public UserBook patchBook(Long id, UserBook userBook) {
-    if (!userBookRepository.existsById(id)) {
-      throw new RuntimeException("Book not found");
-    }
-    userBook.setId(id);
-    return userBookRepository.save(userBook);
+    throw new RuntimeException("Book not found");
   }
 
   public void deleteBook(Long id) {
-    if (userBookRepository.existsById(id)) {
-      userBookRepository.deleteById(id);
-    } else {
-      throw new RuntimeException("Book not found");
+    userBookRepository.deleteById(id);
+  }
+
+  public UserBook patchBook(Long id, UserBook userBookDetails) {
+    UserBook existingUserBook = userBookRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Book not found"));
+
+    if (userBookDetails.getTitle() != null) {
+      existingUserBook.setTitle(userBookDetails.getTitle());
     }
+    if (userBookDetails.getAuthor() != null) {
+      existingUserBook.setAuthor(userBookDetails.getAuthor());
+    }
+
+    return userBookRepository.save(existingUserBook);
   }
 }

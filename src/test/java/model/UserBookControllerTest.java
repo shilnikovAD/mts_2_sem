@@ -1,59 +1,77 @@
 package model;
 
-import java.util.List;
-import org.example.controller.UserController;
-import org.example.model.User;
-import org.example.service.UserService;
+import org.example.Main;
+import org.example.controller.UserBookController;
+import org.example.model.UserBook;
+import org.example.security.SecurityConfig;
+import org.example.service.UserBookService;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserController.class)
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(UserBookController.class)
+@ContextConfiguration(classes = {SecurityConfig.class, Main.class})
 public class UserBookControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
-  @MockBean
-  private UserService userService;
+  @MockitoBean
+  private UserBookService userBookService;
+
+  private static final String JWT_TOKEN = "Bearer your_jwt_token";
 
   @Test
-  public void testGetAllUsers() throws Exception {
-    when(userService.getAllUsers()).thenReturn(List.of(new User("Artur", "testUser")));
+  public void testGetAllBooks() throws Exception {
+    when(userBookService.getAllBooks()).thenReturn(List.of(
+        new UserBook(1L, "Java Basics", "John Doe"),
+        new UserBook(2L, "Spring Boot", "Jane Doe")
+    ));
 
-    mockMvc.perform(get("/users"))
+    mockMvc.perform(get("/user-books")
+            .header("Authorization", JWT_TOKEN))
         .andExpect(status().isOk())
-        .andExpect(content().string("testUser"));
+        .andExpect(content().json("""
+                        [
+                            {"id":1,"title":"Java Basics","author":"John Doe"},
+                            {"id":2,"title":"Spring Boot","author":"Jane Doe"}
+                        ]
+                    """));
   }
 
   @Test
-  public void testGetUserById_Positive() throws Exception {
-    User user = new User();
-    user.setId(1L);
-    user.setName("John Doe");
+  public void testGetBookById_Positive() throws Exception {
+    when(userBookService.getBookById(1L))
+        .thenReturn(Optional.of(new UserBook(1L, "Book Title", "Author Name")));
 
-    when(userService.getUserById(1L)).thenReturn(user);
 
-    mockMvc.perform(get("/users/1"))
+    mockMvc.perform(get("/user-books/1")
+            .header("Authorization", JWT_TOKEN))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id").value(1))
-        .andExpect(jsonPath("$.name").value("John Doe"));
+        .andExpect(jsonPath("$.title").value("Book Title"))
+        .andExpect(jsonPath("$.author").value("Author Name"));
   }
 
   @Test
-  public void testGetUserById_Negative() throws Exception {
-    when(userService.getUserById(999L)).thenReturn(null);
+  public void testGetBookById_Negative() throws Exception {
+    when(userBookService.getBookById(999L)).thenReturn(Optional.empty());
 
-    mockMvc.perform(get("/users/999"))
+    mockMvc.perform(get("/user-books/999")
+            .header("Authorization", JWT_TOKEN))
         .andExpect(status().isNotFound());
   }
 }
