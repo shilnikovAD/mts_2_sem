@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 @Service
 public class UserCourseService {
 
@@ -17,13 +15,22 @@ public class UserCourseService {
   @Autowired
   private UserCourseRepository userCourseRepository;
 
-  public List<UserCourse> getAllCourses() {
-    logger.info("Fetching all courses");
-    return userCourseRepository.findAll();
-  }
+  private boolean courseCreated = false;
 
-  public UserCourse createCourse(UserCourse userCourse) {
+  /**
+   * Гарантия: метод будет выполнен **ровно один раз**, даже если несколько запросов
+   * попытаются создать курс одновременно. Для этого используется флаг `courseCreated`,
+   * который блокирует повторный вызов метода, пока первый не завершится.
+   */
+  public synchronized UserCourse createCourseExactlyOnce(UserCourse userCourse) {
+    if (courseCreated) {
+      throw new IllegalStateException("Course has already been created.");
+    }
+
     logger.info("Creating new course: {}", userCourse.getCourseName());
-    return userCourseRepository.save(userCourse);
+    UserCourse createdCourse = userCourseRepository.save(userCourse);
+    courseCreated = true;
+
+    return createdCourse;
   }
 }

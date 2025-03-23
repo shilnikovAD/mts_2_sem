@@ -26,3 +26,24 @@ management:
         include: "*"
         exclude: shutdown
       base-path: /admin
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      default:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slidingWindowSize: 100
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10000ms
+        permittedNumberOfCallsInHalfOpenState: 5
+        eventConsumerBufferSize: 10
+        ringBufferSizeInClosedState: 100
+        ringBufferSizeInHalfOpenState: 10
+
+  ratelimiter:
+    instances:
+      default:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+        timeoutDuration: 500ms

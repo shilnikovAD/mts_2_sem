@@ -1,14 +1,16 @@
 package org.example.service;
 
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.UserBook;
 import org.example.repository.UserBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @AllArgsConstructor
 @Service
@@ -17,6 +19,12 @@ public class UserBookService {
 
   @Autowired
   private UserBookRepository userBookRepository;
+
+  @Async
+  public CompletableFuture<List<UserBook>> getAllBooksAsync() {
+    List<UserBook> books = userBookRepository.findAll();
+    return CompletableFuture.completedFuture(books);
+  }
 
   public List<UserBook> getAllBooks() {
     return userBookRepository.findAll();

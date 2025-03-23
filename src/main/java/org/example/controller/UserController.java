@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.example.OpenApi.USER_API;
 import org.example.service.UserService;
 import org.example.model.User;
@@ -23,39 +25,47 @@ public class UserController implements USER_API {
   @Autowired
   private UserService userService;
 
+  private final RateLimiter rateLimiter = RateLimiter.ofDefaults("userController");
+
   @Override
   @GetMapping
+  @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetAllUsers")
   public List<User> getAllUsers() {
-    return userService.getAllUsers();
+    return rateLimiter.executeSupplier(() -> userService.getAllUsers());
   }
 
   @Override
   @GetMapping("/{id}")
+  @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUserById")
   public User getUserById(@PathVariable Long id) {
-    return userService.getUserById(id);
+    return rateLimiter.executeSupplier(() -> userService.getUserById(id));
   }
 
   @Override
   @PostMapping
+  @CircuitBreaker(name = "userService", fallbackMethod = "fallbackCreateUser")
   public User createUser(@RequestBody User user) {
-    return userService.createUser(user);
+    return rateLimiter.executeSupplier(() -> userService.createUser(user));
   }
 
   @Override
   @PutMapping("/{id}")
+  @CircuitBreaker(name = "userService", fallbackMethod = "fallbackUpdateUser")
   public User updateUser(@PathVariable Long id, @RequestBody User user) {
-    return userService.updateUser(id, user);
+    return rateLimiter.executeSupplier(() -> userService.updateUser(id, user));
   }
 
   @Override
   @PatchMapping("/{id}")
+  @CircuitBreaker(name = "userService", fallbackMethod = "fallbackPatchUser")
   public User patchUser(@PathVariable Long id, @RequestBody User user) {
-    return userService.patchUser(id, user);
+    return rateLimiter.executeSupplier(() -> userService.patchUser(id, user));
   }
 
   @Override
   @DeleteMapping("/{id}")
+  @CircuitBreaker(name = "userService", fallbackMethod = "fallbackDeleteUser")
   public void deleteUser(@PathVariable Long id) {
-    userService.deleteUser(id);
+    rateLimiter.executeRunnable(() -> userService.deleteUser(id));
   }
 }

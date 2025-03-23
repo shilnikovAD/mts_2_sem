@@ -1,2 +1,4 @@
-general\UserBookControllerE2ETest.class
+general\TestPostgresqlContainerTest.class
 model\UserBookControllerTest.class
+aspect\ControllerAspectTest.class
+general\UserBookControllerE2ETest.class

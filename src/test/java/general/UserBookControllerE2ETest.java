@@ -2,7 +2,7 @@ package general;
 
 import org.example.Main;
 import org.example.model.UserBook;
-import org.example.security.SecurityConfig;
+import org.example.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

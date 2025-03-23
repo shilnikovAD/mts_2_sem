@@ -1,5 +1,6 @@
 org\example\controller\UserBookController.class
 org\example\service\UserBookService.class
+org\example\config\RestTemplateConfig.class
 org\example\actuator\ActuatorCustomEndpoint.class
 org\example\model\UserBook.class
 org\example\service\UserUniversityService.class
@@ -12,12 +13,18 @@ org\example\model\UserCourse.class
 org\example\aspect\ControllerAspect.class
 org\example\model\User.class
 org\example\repository\UserBookRepository.class
+org\example\config\ThreadPoolConfig.class
 org\example\OpenApi\USER_API.class
 org\example\controller\UserCourseController.class
 org\example\controller\UserController.class
+org\example\config\CacheConfig.class
 org\example\repository\UserCourseRepository.class
-org\example\security\SecurityConfig.class
+org\example\exception\CustomRetryException.class
 org\example\repository\UserUniversityRepository.class
+org\example\config\Resilience4jConfig.class
+org\example\config\WebClientConfig.class
 org\example\OpenApi\BOOK_API.class
 org\example\service\UserCourseService.class
+org\example\config\SecurityConfig.class
 org\example\model\UserUniversity.class
+org\example\config\AsyncConfig.class

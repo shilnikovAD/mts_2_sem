@@ -3,7 +3,7 @@ package model;
 import org.example.Main;
 import org.example.controller.UserBookController;
 import org.example.model.UserBook;
-import org.example.security.SecurityConfig;
+import org.example.config.SecurityConfig;
 import org.example.service.UserBookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
