@@ -1,0 +1,6 @@
+org\example\aspect\ControllerAspectTest.class
+org\example\config\TestContainerConfig.class
+org\example\general\TestPostgresqlContainerTest.class
+org\example\general\UserBookControllerE2ETest.class
+org\example\model\UserBookControllerTest.class
+org\example\repository\UserRepositoryTest.class

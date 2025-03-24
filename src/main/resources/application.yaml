@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: mts_2_sem
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test_db
+    username: sa
+    password: sa
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+  flyway:
+    enabled: true
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: shutdown
+      base-path: /admin
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      default:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slidingWindowSize: 100
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10000ms
+        permittedNumberOfCallsInHalfOpenState: 5
+        eventConsumerBufferSize: 10
+        ringBufferSizeInClosedState: 100
+        ringBufferSizeInHalfOpenState: 10
+
+  ratelimiter:
+    instances:
+      default:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+        timeoutDuration: 500ms
