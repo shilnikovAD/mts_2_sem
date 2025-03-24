@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;  // Добавляем аннотацию для версии
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,15 @@ public class UserBook {
 
   private String title;
   private String author;
+
+  @Version
+  private Long version;
+
+  public UserBook(String title, String author) {
+    this.title = title;
+    this.author = author;
+    this.version = 1L;
+  }
 
   public Long getId() {
     return id;

@@ -1,4 +1,6 @@
-C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\aspect\ControllerAspectTest.java
-C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\general\TestPostgresqlContainerTest.java
-C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\general\UserBookControllerE2ETest.java
-C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\model\UserBookControllerTest.java
+C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\org\example\aspect\ControllerAspectTest.java
+C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\org\example\config\TestContainerConfig.java
+C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\org\example\general\TestPostgresqlContainerTest.java
+C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\org\example\general\UserBookControllerE2ETest.java
+C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\org\example\model\UserBookControllerTest.java
+C:\Users\User\IdeaProjects\mts 2_sem\src\test\java\org\example\repository\UserRepositoryTest.java

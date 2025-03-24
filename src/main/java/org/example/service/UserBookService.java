@@ -1,5 +1,6 @@
 package org.example.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +40,15 @@ public class UserBookService {
   }
 
   public UserBook updateBook(Long id, UserBook userBook) {
-    if (userBookRepository.findById(id).isPresent()) {
-      return userBookRepository.save(userBook);
-    }
-    throw new RuntimeException("Book not found");
+    return userBookRepository.findById(id)
+        .map(existingBook -> {
+          existingBook.setTitle(userBook.getTitle());
+          existingBook.setAuthor(userBook.getAuthor());
+          return userBookRepository.save(existingBook);
+        })
+        .orElseThrow(() -> new EntityNotFoundException("Book not found"));
   }
+
 
   public void deleteBook(Long id) {
     userBookRepository.deleteById(id);

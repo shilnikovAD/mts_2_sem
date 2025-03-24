@@ -1,6 +1,7 @@
-package general;
+package org.example.general;
 
 import org.example.Main;
+import org.example.config.TestContainerConfig;
 import org.example.model.UserBook;
 import org.example.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = {Main.class, SecurityConfig.class})
 @ActiveProfiles("test")
-public class UserBookControllerE2ETest {
+public class UserBookControllerE2ETest extends TestContainerConfig {
 
   @LocalServerPort
   private int port;
@@ -34,8 +35,8 @@ public class UserBookControllerE2ETest {
     String url = String.format("http://localhost:%d/user-books", port);
 
     UserBook[] testBooks = new UserBook[]{
-        new UserBook(1L, "Java Basics", "John Doe"),
-        new UserBook(2L, "Spring Boot", "Jane Doe")
+        new UserBook( "Java Basics", "John Doe"),
+        new UserBook( "Spring Boot", "Jane Doe")
     };
 
     for (UserBook book : testBooks) {

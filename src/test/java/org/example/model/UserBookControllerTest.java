@@ -1,8 +1,8 @@
-package model;
+package org.example.model;
 
 import org.example.Main;
+import org.example.config.TestContainerConfig;
 import org.example.controller.UserBookController;
-import org.example.model.UserBook;
 import org.example.config.SecurityConfig;
 import org.example.service.UserBookService;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserBookController.class)
 @ContextConfiguration(classes = {SecurityConfig.class, Main.class})
-public class UserBookControllerTest {
+public class UserBookControllerTest extends TestContainerConfig {
 
   @Autowired
   private MockMvc mockMvc;
@@ -37,26 +37,25 @@ public class UserBookControllerTest {
   @Test
   public void testGetAllBooks() throws Exception {
     when(userBookService.getAllBooks()).thenReturn(List.of(
-        new UserBook(1L, "Java Basics", "John Doe"),
-        new UserBook(2L, "Spring Boot", "Jane Doe")
+        new UserBook(1L, "Java Basics", "John Doe", 1L),
+        new UserBook(2L, "Spring Boot", "Jane Doe", 1L)
     ));
 
     mockMvc.perform(get("/user-books")
             .header("Authorization", JWT_TOKEN))
         .andExpect(status().isOk())
-        .andExpect(content().json("""
-                        [
-                            {"id":1,"title":"Java Basics","author":"John Doe"},
-                            {"id":2,"title":"Spring Boot","author":"Jane Doe"}
-                        ]
-                    """));
+        .andExpect(jsonPath("$[0].id").value(1))
+        .andExpect(jsonPath("$[0].title").value("Java Basics"))
+        .andExpect(jsonPath("$[0].author").value("John Doe"))
+        .andExpect(jsonPath("$[1].id").value(2))
+        .andExpect(jsonPath("$[1].title").value("Spring Boot"))
+        .andExpect(jsonPath("$[1].author").value("Jane Doe"));
   }
 
   @Test
   public void testGetBookById_Positive() throws Exception {
     when(userBookService.getBookById(1L))
-        .thenReturn(Optional.of(new UserBook(1L, "Book Title", "Author Name")));
-
+        .thenReturn(Optional.of(new UserBook(1L, "Book Title", "Author Name", 1L)));
 
     mockMvc.perform(get("/user-books/1")
             .header("Authorization", JWT_TOKEN))

@@ -1,7 +1,8 @@
-package general;
+package org.example.general;
 
 import org.example.Main;
 import org.example.config.SecurityConfig;
+import org.example.config.TestContainerConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,10 @@ import org.testcontainers.utility.DockerImageName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SpringBootTest
+@SpringBootTest()
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {SecurityConfig.class, Main.class})
 @ActiveProfiles("test")
-public class TestPostgresqlContainerTest {
+public class TestPostgresqlContainerTest extends TestContainerConfig {
 
   private static final Logger logger = LoggerFactory.getLogger(TestPostgresqlContainerTest.class);
 

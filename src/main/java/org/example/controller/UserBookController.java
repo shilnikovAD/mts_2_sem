@@ -1,14 +1,11 @@
 package org.example.controller;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
-import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.ratelimiter.RateLimiter;
-import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.example.OpenApi.BOOK_API;
 import org.example.service.UserBookService;
 import org.example.model.UserBook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,16 +18,8 @@ public class UserBookController implements BOOK_API {
 
   private final UserBookService userBookService;
 
-  private final RateLimiter rateLimiter;
-
-  private final CircuitBreaker circuitBreaker;
-
-  @Autowired
-  public UserBookController(UserBookService userBookService) {
-    this.userBookService = userBookService;
-    this.rateLimiter = RateLimiter.ofDefaults("bookService");
-    this.circuitBreaker = CircuitBreaker.ofDefaults("bookService");
-  }
+  private final RateLimiter rateLimiter = RateLimiter.ofDefaults("bookService");
+  private final CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("bookService");
 
   @Override
   @GetMapping

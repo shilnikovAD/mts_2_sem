@@ -1,10 +1,10 @@
 spring:
   application:
-    name: mts 2_sem
+    name: mts_2_sem
   datasource:
     url: jdbc:postgresql://localhost:5432/test_db
     username: sa
-    password:
+    password: sa
     driver-class-name: org.postgresql.Driver
 
   jpa:

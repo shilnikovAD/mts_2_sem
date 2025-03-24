@@ -25,8 +25,8 @@ public class Resilience4jConfig {
     return CircuitBreakerConfig.custom()
         .failureRateThreshold(50)
         .waitDurationInOpenState(Duration.ofSeconds(10))
-        .ringBufferSizeInClosedState(5)
-        .ringBufferSizeInHalfOpenState(3)
+        .slidingWindowSize(5)
+        .slidingWindowType(CircuitBreakerConfig.SlidingWindowType.COUNT_BASED)
         .build();
   }
 

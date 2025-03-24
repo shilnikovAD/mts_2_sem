@@ -1,8 +1,9 @@
-package aspect;
+package org.example.aspect;
 
 import org.example.Main;
 import org.example.aspect.ControllerAspect;
 import org.example.config.SecurityConfig;
+import org.example.config.TestContainerConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {Main.class, SecurityConfig.class})
-public class ControllerAspectTest {
+public class ControllerAspectTest extends TestContainerConfig {
 
   @Autowired
   private MockMvc mockMvc;
